@@ -40,12 +40,19 @@ class Type(models.Model):
 
 class Skill(models.Model):
     name = models.CharField(max_length=100, verbose_name='Наименование способности')
-    type = models.ForeignKey(Type, related_name='slill_type', on_delete=models.CASCADE,
+    type = models.ForeignKey(Type, related_name='skill_type', on_delete=models.CASCADE,
                              verbose_name='Тип способности')
     description = models.CharField(max_length=9999, verbose_name='Описание способности')
     image = models.ImageField(upload_to='images/skills/', verbose_name='Изображение')
-    rarity = models.ForeignKey(Rarity, related_name='item_rarity', on_delete=models.CASCADE,
+    rarity = models.ForeignKey(Rarity, related_name='skill_rarity', on_delete=models.CASCADE,
                                verbose_name='Редкость способности')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Способность"
+        verbose_name_plural = "Способности"
 
 
 class Item(models.Model):
@@ -71,7 +78,7 @@ class Item(models.Model):
 class Artifact(models.Model):
     name = models.CharField(max_length=100, verbose_name='Наименование артефакта')
     description = models.CharField(max_length=9999, verbose_name='Описание артефакта')
-    rarity = models.ForeignKey(Rarity, related_name='item_rarity', on_delete=models.CASCADE,
+    rarity = models.ForeignKey(Rarity, related_name='artifact_rarity', on_delete=models.CASCADE,
                                verbose_name='Редкость артефакта')
     image = models.ImageField(upload_to='images/artifacts/', verbose_name='Изображение')
     sell_cost = models.PositiveIntegerField(verbose_name='Стоимость артефакта к продаже')
